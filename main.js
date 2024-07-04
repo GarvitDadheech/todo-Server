@@ -71,6 +71,19 @@ const express = require('express');
       res.status(404).send('Todo not found');
     }
   });
+
+  // DELETE /todos/:id - Delete a todo item by ID
+  app.delete('/todos/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const index = todos.findIndex(todo => todo.id === id);
+    if (index !== -1) {
+      todos.splice(index, 1);
+      saveTodos();
+      res.status(200).send('Todo deleted');
+    } else {
+      res.status(404).send('Todo not found');
+    }
+  });
   
   // Handle undefined routes
   app.use((req, res) => {
