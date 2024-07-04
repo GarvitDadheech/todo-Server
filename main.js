@@ -45,45 +45,7 @@ const express = require('express');
     }
   });
   
-  // POST /todos - Create a new todo item
-  app.post('/todos', (req, res) => {
-    const { title, description } = req.body;
-    if (title && description) {
-      const newTodo = { id: generateId(), title, description };
-      todos.push(newTodo);
-      saveTodos();
-      res.status(201).json({ id: newTodo.id });
-    } else {
-      res.status(400).send('Invalid request');
-    }
-  });
-  
-  // PUT /todos/:id - Update an existing todo item by ID
-  app.put('/todos/:id', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    const { title, description } = req.body;
-    const index = todos.findIndex(todo => todo.id === id);
-    if (index !== -1) {
-      todos[index] = { id, title, description };
-      saveTodos();
-      res.status(200).send('Todo updated');
-    } else {
-      res.status(404).send('Todo not found');
-    }
-  });
-  
-  // DELETE /todos/:id - Delete a todo item by ID
-  app.delete('/todos/:id', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    const index = todos.findIndex(todo => todo.id === id);
-    if (index !== -1) {
-      todos.splice(index, 1);
-      saveTodos();
-      res.status(200).send('Todo deleted');
-    } else {
-      res.status(404).send('Todo not found');
-    }
-  });
+ 
   
   // Handle undefined routes
   app.use((req, res) => {
