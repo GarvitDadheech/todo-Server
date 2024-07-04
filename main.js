@@ -45,7 +45,18 @@ const express = require('express');
     }
   });
   
- 
+ // POST /todos - Create a new todo item
+ app.post('/todos', (req, res) => {
+    const { title, description } = req.body;
+    if (title && description) {
+      const newTodo = { id: generateId(), title, description };
+      todos.push(newTodo);
+      saveTodos();
+      res.status(201).json({ id: newTodo.id });
+    } else {
+      res.status(400).send('Invalid request');
+    }
+  });
   
   // Handle undefined routes
   app.use((req, res) => {
